@@ -18,7 +18,7 @@ For example:
 An Armstrong number (or Narcissistic number) is a number equal to the sum of its digits raised to the power of the number of digits.
 For example:
 
-371 (has 3 digit, sum of digits multiplied by itself 3 times): (3*3*3) + (7*7*7) + (1*1*1) = 371 (Armstrong)
+371 (has 3 digit, sum of digits multiplied by itself 3 times): (3^3) + (7^3) + (1^3) = 371 (Armstrong)
 
 ### 4. Odd/Even Classification
 A number is classified as:
@@ -40,11 +40,11 @@ GET /api/classify-number?number=<number>
 
 Request Parameters
 
-Response Format:
-
+Response Format: 
 Success (200 OK)
 
 {
+
     "number": 371,
     
     "is_prime": false,
@@ -56,22 +56,27 @@ Success (200 OK)
     "digit_sum": 11,
     
     "trivia": "371 is an Armstrong number because 3^3 + 7^3 + 1^3 = 371"
+    
 }
 
 Error (400 Bad Request):
 json
 
 {
+
     "number": "invalid-input",
     
     "error": true
+    
 }
 
 Error (500 Internal Server Error):
 json
 
 {
+
     "error": "Failed to fetch trivia."
+    
 }
 
 ### Project Setup and Installation
@@ -108,7 +113,8 @@ npm run dev
 
 http://localhost:3000/api/classify-number?number=371
   
-Deployment
+- Deployment
+
 This API is deployed on Render and publicly accessible at:
 
 https://hng12-stage1-api.onrender.com/api/classify-number?number=70
@@ -147,7 +153,7 @@ Trivia Fetching Errors:
 If the Numbers API fails, a 500 status code is returned with an appropriate error message.
 
 - Technologies Used
-- 
+
 Backend Framework: Node.js with Express
 
 HTTP Requests: Axios
