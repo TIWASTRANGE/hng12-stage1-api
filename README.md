@@ -117,7 +117,7 @@ http://localhost:3000/api/classify-number?number=371
 
 This API is deployed on Render and publicly accessible at:
 
-https://hng12-stage1-api.onrender.com/api/classify-number?number=70
+https://hng12-stage1-api-v1.onrender.com/api/classify-number?number=371
 
 ### How It Works
 
