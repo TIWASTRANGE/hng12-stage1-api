@@ -8,6 +8,7 @@ const app = express();
 
 app.use(cors());
 
+// Prime Number Check
 function isPrime(num) {
     if (num < 2) return false;
     for (let i = 2; i * i <= num; i++) {
@@ -16,6 +17,7 @@ function isPrime(num) {
     return true;
 }
 
+// Perfect Number Check
 function isPerfect(num) {
     let sum = 1;
     for (let i = 2; i * i <= num; i++) {
@@ -27,16 +29,19 @@ function isPerfect(num) {
     return sum === num && num !== 1;
 }
 
+// Armstrong Number Check
 function isArmstrong(num) {
     const digits = num.toString().split("").map(Number);
     const power = digits.length;
     return digits.reduce((sum, digit) => sum + Math.pow(digit, power), 0) === num;
 }
 
+// Digit Sum Calculation
 function digitSum(num) {
     return num.toString().split("").reduce((sum, digit) => sum + parseInt(digit), 0);
 }
 
+// Get Properties
 function getProperties(num) {
     let properties = [];
     if (isArmstrong(num)) properties.push("armstrong");
@@ -44,15 +49,20 @@ function getProperties(num) {
     return properties;
 }
 
+// API Endpoint
 app.get("/api/classify-number", async (req, res) => {
     const { number } = req.query;
+
+    // Validate input: must be a positive integer
+    if (!/^\d+$/.test(number)) {
+        return res.status(400).json({ 
+            number: number, 
+            error: true, 
+        });
+    }
+
     const num = parseInt(number);
 
-    if (isNaN(num)) {
-        return res.status(400).json(
-            { number, error: true }
-        );
-    }
     try {
         const { data: trivia } = await axios.get(`http://numbersapi.com/${num}/math?json`);
         res.json({
@@ -68,6 +78,7 @@ app.get("/api/classify-number", async (req, res) => {
     }
 });
 
+// Start Server
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
