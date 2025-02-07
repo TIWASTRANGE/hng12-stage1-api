@@ -10,7 +10,7 @@ app.use(cors());
 
 // Prime Number Check
 function isPrime(num) {
-    if (num < 2) return false;
+    if (num < 2) return false; // Prime numbers are > 1
     for (let i = 2; i * i <= num; i++) {
         if (num % i === 0) return false;
     }
@@ -19,6 +19,7 @@ function isPrime(num) {
 
 // Perfect Number Check
 function isPerfect(num) {
+    if (num < 1) return false; 
     let sum = 1;
     for (let i = 2; i * i <= num; i++) {
         if (num % i === 0) {
@@ -26,11 +27,12 @@ function isPerfect(num) {
             if (i !== num / i) sum += num / i;
         }
     }
-    return sum === num && num !== 1;
+    return sum === num;
 }
 
 // Armstrong Number Check
 function isArmstrong(num) {
+    if (num < 0) return false; 
     const digits = num.toString().split("").map(Number);
     const power = digits.length;
     return digits.reduce((sum, digit) => sum + Math.pow(digit, power), 0) === num;
@@ -38,7 +40,10 @@ function isArmstrong(num) {
 
 // Digit Sum Calculation
 function digitSum(num) {
-    return num.toString().split("").reduce((sum, digit) => sum + parseInt(digit), 0);
+    return num
+        .toString()
+        .split("")
+        .reduce((sum, digit) => sum + Math.abs(parseInt(digit)), 0); 
 }
 
 // Get Properties
@@ -53,11 +58,11 @@ function getProperties(num) {
 app.get("/api/classify-number", async (req, res) => {
     const { number } = req.query;
 
-    // Validate input: must be a positive integer
-    if (!/^\d+$/.test(number)) {
-        return res.status(400).json({ 
-            number: number, 
-            error: true, 
+    // Validate input: must be a valid number
+    if (!/^-?\d+$/.test(number)) {
+        return res.status(400).json({
+            number: number ,
+            error: true,
         });
     }
 
